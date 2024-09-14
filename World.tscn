@@ -1,0 +1,85 @@
+[gd_scene load_steps=14 format=3 uid="uid://b8g1yla5yfeqp"]
+
+[ext_resource type="PackedScene" uid="uid://70cvsbrrihhv" path="res://Car.tscn" id="1_8sg4u"]
+[ext_resource type="PackedScene" uid="uid://b16erymj7bg6" path="res://Hud.tscn" id="1_crsu4"]
+[ext_resource type="Texture2D" uid="uid://d3o4qjmio0buu" path="res://GridTexture.png" id="2_nbsvr"]
+[ext_resource type="Script" path="res://WorldCollider.cs" id="3_5y14q"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ci1lv"]
+
+[sub_resource type="Sky" id="Sky_rjehy"]
+sky_material = SubResource("ProceduralSkyMaterial_ci1lv")
+
+[sub_resource type="Environment" id="Environment_vk7bc"]
+background_mode = 2
+sky = SubResource("Sky_rjehy")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3d8k4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sb15x"]
+albedo_color = Color(0, 0.313842, 0.102927, 1)
+albedo_texture = ExtResource("2_nbsvr")
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true
+texture_filter = 4
+
+[sub_resource type="QuadMesh" id="QuadMesh_uen8k"]
+material = SubResource("StandardMaterial3D_sb15x")
+size = Vector2(4096, 4096)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lsad2"]
+size = Vector3(10, 10, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnb0n"]
+albedo_color = Color(0.305882, 0, 0, 1)
+albedo_texture = ExtResource("2_nbsvr")
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_gehud"]
+material = SubResource("StandardMaterial3D_pnb0n")
+size = Vector3(10, 10, 30)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -2.18557e-08, 0.5, -0.5, -3.78552e-08, 0.866025, -2.51215e-15, -1, -4.37114e-08, 0, 20, 0)
+light_energy = 3.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vk7bc")
+
+[node name="Car" parent="." instance=ExtResource("1_8sg4u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 2
+
+[node name="WorldCollider" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("anchorVehicle")]
+collision_mask = 0
+script = ExtResource("3_5y14q")
+anchorVehicle = NodePath("../Car")
+
+[node name="GroundCollider" type="CollisionShape3D" parent="WorldCollider"]
+shape = SubResource("WorldBoundaryShape3D_3d8k4")
+
+[node name="GroundMesh" type="MeshInstance3D" parent="WorldCollider/GroundCollider"]
+mesh = SubResource("QuadMesh_uen8k")
+skeleton = NodePath("../..")
+
+[node name="Ramp" type="CollisionShape3D" parent="WorldCollider"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, -1, -150)
+shape = SubResource("BoxShape3D_lsad2")
+
+[node name="RampMesh" type="MeshInstance3D" parent="WorldCollider/Ramp"]
+mesh = SubResource("BoxMesh_gehud")
+
+[node name="Ramp2" type="CollisionShape3D" parent="WorldCollider"]
+transform = Transform3D(-1, -2.26267e-08, -8.44439e-08, 0, 0.965926, -0.258819, 8.74228e-08, -0.258819, -0.965926, 20, -1, -150)
+shape = SubResource("BoxShape3D_lsad2")
+
+[node name="RampMesh" type="MeshInstance3D" parent="WorldCollider/Ramp2"]
+mesh = SubResource("BoxMesh_gehud")
+
+[node name="Hud" parent="." node_paths=PackedStringArray("worldCollider") instance=ExtResource("1_crsu4")]
+worldCollider = NodePath("../WorldCollider")

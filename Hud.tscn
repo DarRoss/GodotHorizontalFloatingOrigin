@@ -1,0 +1,172 @@
+[gd_scene load_steps=3 format=3 uid="uid://b16erymj7bg6"]
+
+[ext_resource type="Script" path="res://Hud.cs" id="1_4kh17"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_que2s"]
+font_size = 28
+
+[node name="Hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4kh17")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="BoxesLeft" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RectCoords" type="ColorRect" parent="MarginContainer/HBoxContainer/BoxesLeft"]
+custom_minimum_size = Vector2(160, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Coords" type="Label" parent="MarginContainer/HBoxContainer/BoxesLeft/RectCoords"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -50.5
+offset_right = 64.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "True X: 	0
+True Z: 	0
+Virtual X: 	0
+Virtual Z: 	0"
+autowrap_mode = 3
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/BoxesLeft"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RectSpeed" type="ColorRect" parent="MarginContainer/HBoxContainer/BoxesLeft"]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Speed" type="Label" parent="MarginContainer/HBoxContainer/BoxesLeft/RectSpeed"]
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = -19.5
+offset_right = 81.5
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Speed: 	0 km/h"
+label_settings = SubResource("LabelSettings_que2s")
+autowrap_mode = 3
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxesCenter" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RectFOI" type="ColorRect" parent="MarginContainer/HBoxContainer/BoxesCenter"]
+custom_minimum_size = Vector2(220, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.501961)
+
+[node name="FOI" type="Label" parent="MarginContainer/HBoxContainer/BoxesCenter/RectFOI"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Floating Origin: Disabled"
+autowrap_mode = 3
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/BoxesCenter"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control2" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxesRight" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RectKeybinds" type="ColorRect" parent="MarginContainer/HBoxContainer/BoxesRight"]
+custom_minimum_size = Vector2(240, 250)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Keybinds" type="Label" parent="MarginContainer/HBoxContainer/BoxesRight/RectKeybinds"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -63.5
+offset_right = 100.0
+offset_bottom = 63.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Controls:
+W - Acceleration
+S - Brake
+A and D - Steering
+Mouse - Move Camera
+Scroll Wheel - Camera Zoom
+F - Toggle floating origin
+R - Reset Car
+Esc - Toggle mouse capture"
+autowrap_mode = 3
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/BoxesRight"]
+layout_mode = 2
+size_flags_vertical = 3

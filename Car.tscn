@@ -1,0 +1,212 @@
+[gd_scene load_steps=18 format=3 uid="uid://70cvsbrrihhv"]
+
+[ext_resource type="Script" path="res://CarController.cs" id="1_1c8tb"]
+[ext_resource type="Texture2D" uid="uid://d3o4qjmio0buu" path="res://GridTexture.png" id="1_xve2x"]
+[ext_resource type="Script" path="res://CameraController.cs" id="2_pgoqy"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_y8yxh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fl1o"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rmlkr"]
+material = SubResource("StandardMaterial3D_7fl1o")
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jc18d"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a2nll"]
+material = SubResource("StandardMaterial3D_jc18d")
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ro6p5"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m6pxv"]
+material = SubResource("StandardMaterial3D_ro6p5")
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8mb7"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dx7fa"]
+material = SubResource("StandardMaterial3D_o8mb7")
+height = 0.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jgx8p"]
+height = 7.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1lrx7"]
+radius = 0.4
+height = 6.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fxkqd"]
+radius = 0.4
+height = 6.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kv2w3"]
+radius = 0.3
+height = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sli7b"]
+albedo_color = Color(0, 0.509804, 0.584314, 1)
+albedo_texture = ExtResource("1_xve2x")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+texture_filter = 2
+
+[node name="Car" type="VehicleBody3D"]
+mass = 1000.0
+center_of_mass_mode = 1
+script = ExtResource("1_1c8tb")
+
+[node name="CameraController" type="Node3D" parent="."]
+script = ExtResource("2_pgoqy")
+
+[node name="Yaw" type="Node3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Pitch" type="Node3D" parent="CameraController/Yaw"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraController/Yaw/Pitch"]
+shape = SubResource("SeparationRayShape3D_y8yxh")
+spring_length = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraController/Yaw/Pitch/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="WheelFL" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0.25, -1.3)
+use_as_traction = true
+use_as_steering = true
+wheel_roll_influence = 0.0
+suspension_stiffness = 100.0
+damping_compression = 0.95
+damping_relaxation = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFL"]
+transform = Transform3D(-4.37114e-08, 1, 8.74228e-08, -1, -4.37114e-08, 8.74228e-08, 8.74228e-08, -8.74228e-08, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_rmlkr")
+
+[node name="WheelFR" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.25, -1.3)
+use_as_traction = true
+use_as_steering = true
+wheel_roll_influence = 0.0
+suspension_stiffness = 100.0
+damping_compression = 0.95
+damping_relaxation = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WheelFR"]
+transform = Transform3D(-4.37114e-08, 1, -8.74228e-08, -1, -4.37114e-08, -8.74228e-08, -8.74228e-08, 8.74228e-08, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_a2nll")
+
+[node name="WheelBR" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.25, 2.6)
+wheel_roll_influence = 0.0
+suspension_stiffness = 100.0
+damping_compression = 0.95
+damping_relaxation = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WheelBR"]
+transform = Transform3D(-4.37114e-08, 1, -8.74228e-08, -1, -4.37114e-08, -8.74228e-08, -8.74228e-08, 8.74228e-08, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_m6pxv")
+
+[node name="WheelBL" type="VehicleWheel3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0.25, 2.6)
+wheel_roll_influence = 0.0
+suspension_stiffness = 100.0
+damping_compression = 0.95
+damping_relaxation = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WheelBL"]
+transform = Transform3D(-4.37114e-08, 1, 8.74228e-08, -1, -4.37114e-08, 8.74228e-08, 8.74228e-08, -8.74228e-08, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_dx7fa")
+
+[node name="ColliderDorsal" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_jgx8p")
+
+[node name="ColliderRight" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.450191, 0.4, 0)
+shape = SubResource("CapsuleShape3D_1lrx7")
+
+[node name="ColliderLeft" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.45, 0.4, 0)
+shape = SubResource("CapsuleShape3D_fxkqd")
+
+[node name="ColliderVentral" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.3, 0)
+shape = SubResource("CapsuleShape3D_kv2w3")
+
+[node name="MeshUpper" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, -4.37114e-08)
+material_override = SubResource("StandardMaterial3D_sli7b")
+operation = 1
+size = Vector3(2, 16, 2)
+
+[node name="Hull" type="CSGCylinder3D" parent="MeshUpper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+operation = 1
+radius = 1.0
+height = 4.0
+
+[node name="NoseCone" type="CSGCylinder3D" parent="MeshUpper/Hull"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 5.56363e-08)
+radius = 1.0
+height = 4.0
+cone = true
+
+[node name="RearCone" type="CSGCylinder3D" parent="MeshUpper/Hull"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, -8.74228e-08, -1, -8.74228e-08, -3.82137e-15, -8.74228e-08, 1, 0, -4, -1.74846e-07)
+radius = 1.0
+height = 4.0
+cone = true
+
+[node name="Cockpit" type="CSGCylinder3D" parent="MeshUpper/Hull"]
+transform = Transform3D(1, 0, 0, 0, 0.999391, -0.0348995, 0, 0.0348995, 0.999391, 0, 0.45837, 0.565595)
+height = 4.0
+
+[node name="Windshield" type="CSGSphere3D" parent="MeshUpper/Hull/Cockpit"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0, 2, 1.19209e-07)
+
+[node name="TailFin" type="CSGBox3D" parent="MeshUpper/Hull"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0.8)
+size = Vector3(0.2, 6, 1.6)
+
+[node name="FinAngle" type="CSGBox3D" parent="MeshUpper/Hull/TailFin"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.8, 1)
+operation = 2
+size = Vector3(1, 5, 1)
+
+[node name="Nozzle" type="CSGCylinder3D" parent="MeshUpper/Hull/TailFin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -0.3)
+radius = 0.3
+height = 4.0
+
+[node name="Exhaust" type="CSGCylinder3D" parent="MeshUpper/Hull/TailFin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -0.3)
+operation = 2
+radius = 0.2
+height = 1.0
+
+[node name="WheelWellRear" type="CSGCylinder3D" parent="MeshUpper/Hull"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0, -2.6, 0.25)
+operation = 2
+radius = 0.6
+
+[node name="AxleRear" type="CSGCylinder3D" parent="MeshUpper/Hull/WheelWellRear"]
+operation = 2
+radius = 0.6
+height = 1.5
+
+[node name="WheelWellFront" type="CSGCylinder3D" parent="MeshUpper/Hull"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 0, 1.3, 0.25)
+operation = 2
+radius = 0.6
+
+[node name="AxleFront" type="CSGCylinder3D" parent="MeshUpper/Hull/WheelWellFront"]
+operation = 2
+radius = 0.6
+height = 1.5
